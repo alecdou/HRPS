@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9cbe1006-b5b5-4558-859b-062e984a62b3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/HRPS.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/boundary/GuestUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/boundary/MainUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/controller/GuestController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/entity/Guest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Launch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/boundary/MainUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boundary/MainUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +49,14 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Launch">
+    <configuration name="Launch" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Launch" />
+      <module name="HRPS" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="MainUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="boundary.MainUI" />
       <module name="HRPS" />
@@ -70,6 +72,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Launch" />
         <item itemvalue="Application.MainUI" />
       </list>
     </recent_temporary>
@@ -84,7 +87,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1584264182442</updated>
-      <workItem from="1584264187686" duration="4302000" />
+      <workItem from="1584264187686" duration="4931000" />
     </task>
     <servers />
   </component>
@@ -100,22 +103,22 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="439" y="146" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.0.1440.900@0.0.1440.900" timestamp="1584264278974" />
-    <state width="1398" height="245" key="GridCell.Tab.0.bottom" timestamp="1584269415952">
+    <state width="1398" height="245" key="GridCell.Tab.0.bottom" timestamp="1584269893949">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1584269415952" />
-    <state width="1398" height="245" key="GridCell.Tab.0.center" timestamp="1584269415951">
+    <state width="1398" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1584269893949" />
+    <state width="1398" height="245" key="GridCell.Tab.0.center" timestamp="1584269893948">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1584269415951" />
-    <state width="1398" height="245" key="GridCell.Tab.0.left" timestamp="1584269415950">
+    <state width="1398" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1584269893948" />
+    <state width="1398" height="245" key="GridCell.Tab.0.left" timestamp="1584269893947">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1584269415950" />
-    <state width="1398" height="245" key="GridCell.Tab.0.right" timestamp="1584269415951">
+    <state width="1398" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1584269893947" />
+    <state width="1398" height="245" key="GridCell.Tab.0.right" timestamp="1584269893948">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1584269415951" />
+    <state width="1398" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1584269893948" />
     <state x="208" y="31" key="SettingsEditor" timestamp="1584267306463">
       <screen x="0" y="0" width="1440" height="900" />
     </state>

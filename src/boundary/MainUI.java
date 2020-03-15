@@ -2,7 +2,7 @@ package boundary;
 
 public class MainUI {
 
-    public static void main(String[] args) {
+    public void run() {
         GuestUI guestUI = GuestUI.getInstance();
         guestUI.run();
     }
