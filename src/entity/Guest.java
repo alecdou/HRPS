@@ -2,7 +2,7 @@ package entity;
 
 public class Guest {
     String guestName;
-    String creditCardDetails; // Should we create a separate class for this?
+    String creditCardDetails; // Should we create a separate class for this? //I think yes, number and billing address
     String address;
     String country;
     String gender;
@@ -10,7 +10,7 @@ public class Guest {
     String drivingLicense;
     String nationality;
     String contact;
-    // int roomNum; //?
+    // int roomNum; //? maybe String type
 
     public Guest(String guestName, String creditCardDetails, String address, String country, String gender, String passport, String drivingLicense, String nationality, String contact) {
         this.guestName = guestName;
