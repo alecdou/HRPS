@@ -23,7 +23,8 @@ public class CheckOutUI {
         return single_instance;
     }
 
-    public void run() {
+    public void checkOut() {
+        getCheckOutGuest();
 
         Scanner sc = new Scanner(System.in);
         String roomNum, promotionStr, paymentMethodStr;
@@ -77,11 +78,39 @@ public class CheckOutUI {
         }
 
 
-        String[] results = checkOutController.checkOut(roomNum, promotion);
-        for(String str:results){
-            System.out.println(str);
-        }
 
+
+        StringBuffer sb = new StringBuffer();
+        sb.append("----BILL INVOICE----\n");
+
+
+        //print days of stay
+        checkOutController.setStayDays(roomNum);
+        sb.append(checkOutController.getNumStay() +  "days of stay.  "
+                + checkOutController.getNumWeekday() + " weekdays and "
+                + checkOutController.getNumWeekend() + "weekend days\n");
+
+        //print total room charge
+        sb.append("Total room charge: " + checkOutController.getRoomCharge());
+        sb.append("\n");
+
+
+        //print service charge
+        //TODO
+        sb.append("Total service charge: "+ checkOutController.getServiceCharges());
+        sb.append("\n");
+
+        //print tax
+        sb.append("Tax: " + checkOutController.getTax());
+        sb.append("\n");
+
+
+        //print total amount
+        sb.append("Total bill amount: " + checkOutController.getTotalAmount(promotion));
+        sb.append("\n");
+
+
+        System.out.print(sb);
 
         //print guest details and payment details
         System.out.print("Guest name: " + guestName +"\nPayment method: " + PaymentMethod.fromString(paymentMethodStr));
@@ -89,7 +118,8 @@ public class CheckOutUI {
             System.out.print(" details: " + guests.get(i).getCreditCardDetails());
         }
         System.out.println();
+
+        checkOutController.setRoomVacant(roomNum);
         System.out.println("Successfully check out!");
     }
-
 }

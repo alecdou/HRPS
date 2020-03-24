@@ -9,8 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CheckOutController {
+    private Double totalRoomCharge;
     private Room room;
     private Bill bill;
+    private int numStay = 0, numWeekday = 0, numWeekend = 0;
+
+    // total amout, numStay(numWeekday, numWeekend), servicehistory(each price, total price), total room, tax
 
     private static CheckOutController checkOutController = null;
 
@@ -26,17 +30,14 @@ public class CheckOutController {
         }
         return checkOutController;
     }
+    public void setRoomVacant(String roomNum){
+        roomController.searchRoom(roomNum).setStatus("Vacant");//set to enum VACANT
+    }
 
-
-    public String[] checkOut(String roomNum, boolean promotion){ //
-        String[] result = new String[5];
-        // total amout, numStay(numWeekday, numWeekend), servicehistory(each price, total price), total room, tax, total amount
+    public void setStayDays(String roomNum){
         room = roomController.searchRoom(roomNum);
-
-        //get room charge, sum each day
         LocalDate begin = room.getCheckInTime().toLocalDate;
         LocalDate end = bill.getBillingTime().toLocalDate();
-        int numStay = 0, numWeekday = 0, numWeekend = 0;
         while (!begin.equals(end)){
             begin.plusDays(1);
             numStay++;
@@ -58,36 +59,42 @@ public class CheckOutController {
             }
             numStay++;
         }
+    }
 
-        //get service charges
+    public Double getRoomCharge(){
+        //get room charge, sum each day
+        return bill.getRoomCharges();
+    }
+
+    public Double getServiceCharges(){
 
 
 
-        //get tax
+        return bill.getServiceCharges();
+    }
+
+    public Double getTax(){
         bill.setTax(bill.getTAX() * (bill.getRoomCharges()+bill.getServiceCharges()));
+        return bill.getTax();
+    }
 
-        //get total amount
+    public Double getTotalAmount(boolean promotion){
         bill.setTotalAmount(bill.getRoomCharges() + bill.getServiceCharges() + bill.getTax());
-
-        //set promotion
         if(promotion == true){
-        bill.setTotalAmount(bill.getTotalAmount() * bill.getDISCOUNTRATE());
+            bill.setTotalAmount(bill.getTotalAmount() * bill.getDISCOUNTRATE());
         }
+        return bill.getTotalAmount();
+    }
 
+    public int getNumStay() {
+        return numStay;
+    }
 
-        //print total bill
-        System.out.println();
+    public int getNumWeekday() {
+        return numWeekday;
+    }
 
-
-        //print service history
-
-
-
-        //print payment details
-
-
-        //set room to vacant
-        room.setStatus("Vacant");
-
+    public int getNumWeekend() {
+        return numWeekend;
     }
 }

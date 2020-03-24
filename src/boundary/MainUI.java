@@ -32,7 +32,7 @@ public class MainUI {
                 break;
             case 6:
                 CheckOutUI checkOutUI = CheckOutUI.getInstance();
-                checkOutUI.run();
+                checkOutUI.checkOut();
                 break;
             case 7:
                 break;
