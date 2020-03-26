@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CheckOutUI {
-    private static CheckOutUI single_instance = null;
+    private static CheckOutUI checkOutUI_instance = null;
     private CheckOutController checkOutController = CheckOutController.getInstance();
     private GuestController guestController = GuestController.getInstance();
 
@@ -18,14 +18,12 @@ public class CheckOutUI {
     }
 
     public static CheckOutUI getInstance() {
-        if (single_instance == null)
-            single_instance = new CheckOutUI();
-        return single_instance;
+        if (checkOutUI_instance == null)
+            checkOutUI_instance = new CheckOutUI();
+        return checkOutUI_instance;
     }
 
     public void checkOut() {
-        getCheckOutGuest();
-
         Scanner sc = new Scanner(System.in);
         String roomNum, promotionStr, paymentMethodStr;
         boolean promotion;
@@ -97,7 +95,7 @@ public class CheckOutUI {
 
         //print service charge
         //TODO
-        sb.append("Total service charge: "+ checkOutController.getServiceCharges());
+        sb.append("Total service charge: "+ checkOutController.getServiceCharge());
         sb.append("\n");
 
         //print tax

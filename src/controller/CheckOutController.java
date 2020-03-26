@@ -1,21 +1,14 @@
 package controller;
 
 import entity.Bill;
-import entity.Guest;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CheckOutController {
-    private Double totalRoomCharge;
     private Room room;
     private Bill bill;
     private int numStay = 0, numWeekday = 0, numWeekend = 0;
-
-    // total amout, numStay(numWeekday, numWeekend), servicehistory(each price, total price), total room, tax
-
     private static CheckOutController checkOutController = null;
 
     private CheckOutController(){
@@ -40,9 +33,10 @@ public class CheckOutController {
         LocalDate end = bill.getBillingTime().toLocalDate();
         while (!begin.equals(end)){
             begin.plusDays(1);
+            //for example: 01/04 to 02/04 is one day of stay, so INC is required, otherwise will be 2 days
             numStay++;
             DayOfWeek dayOfWeek = begin.getDayOfWeek();
-            switch(dayOfWeek.getValue()){
+            switch(dayOfWeek.getValue()){  //whether this day is weekday: different rate
                 case 1:
                 case 2:
                 case 3:
@@ -62,11 +56,10 @@ public class CheckOutController {
     }
 
     public Double getRoomCharge(){
-        //get room charge, sum each day
         return bill.getRoomCharges();
     }
 
-    public Double getServiceCharges(){
+    public Double getServiceCharge(){
 
 
 
