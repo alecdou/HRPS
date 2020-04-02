@@ -48,7 +48,7 @@ public class GuestUI {
         return choice;
     }
 
-    private void createGuestUI() {
+    public void createGuestUI() {
         Scanner in = new Scanner(System.in);
         final String guestName, creditCardDetails, address, country, gender, passport, drivingLicense, nationality, contact;
         System.out.print("Guest Name: ");

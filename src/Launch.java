@@ -1,3 +1,4 @@
+import boundary.CheckInUI;
 import boundary.MainUI;
 
 public class Launch {
