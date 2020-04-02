@@ -4,6 +4,7 @@ public class MainUI {
 
     public void run() {
         GuestUI guestUI = GuestUI.getInstance();
-        guestUI.run();
+        CheckInUI checkInUI = CheckInUI.getInstance();
+        checkInUI.run();
     }
 }
