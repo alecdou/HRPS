@@ -61,7 +61,7 @@ public class CheckOutController {
 
     public Double getServiceCharge(){
 
-
+        (getAll?)
 
         return bill.getServiceCharges();
     }
