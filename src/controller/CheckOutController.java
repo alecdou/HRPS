@@ -28,7 +28,7 @@ public class CheckOutController {
     }
 
     public void setStayDays(String roomNum){
-        room = roomController.searchRoom(roomNum);
+        room = roomController.findRoom(roomNum);
         LocalDate begin = room.getCheckInTime().toLocalDate;
         LocalDate end = bill.getBillingTime().toLocalDate();
         while (!begin.equals(end)){
@@ -60,8 +60,7 @@ public class CheckOutController {
     }
 
     public Double getServiceCharge(){
-
-        (getAll?)
+        bill.setServiceCharges(orderController.getTotalPrice(room.getRoomNumber(), room.getCheckInTime(), room.getCheckOutTime(), bill.getBillingTime()));
 
         return bill.getServiceCharges();
     }
@@ -78,6 +77,10 @@ public class CheckOutController {
         }
         return bill.getTotalAmount();
     }
+
+    public void printItems(){
+        orderController.printOrder(room.getRoomNumber());
+    };
 
     public int getNumStay() {
         return numStay;

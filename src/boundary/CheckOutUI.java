@@ -94,7 +94,6 @@ public class CheckOutUI {
 
 
         //print service charge
-        //TODO
         sb.append("Total service charge: "+ checkOutController.getServiceCharge());
         sb.append("\n");
 
@@ -109,6 +108,9 @@ public class CheckOutUI {
 
 
         System.out.print(sb);
+
+        //print odered items
+        checkOutController.printItems();
 
         //print guest details and payment details
         System.out.print("Guest name: " + guestName +"\nPayment method: " + PaymentMethod.fromString(paymentMethodStr));
