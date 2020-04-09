@@ -18,15 +18,16 @@ public class MainUI {
 	            	reservationUI.run();
 	                break;
 	            case 3:
-				/*
-				 * RoomUI roomUI = RoomUI.getInstance(); roomUI.run();
-				 */
+	            	RoomUI roomUI = RoomUI.getInstance(); 
+				try {
+					roomUI.run();
+				} catch (Exception e) {
+					System.out.println("cant run!");
+					e.printStackTrace();
+				}
 	                break;
 	            default:
 	            	break;
-	            /*case 0:
-	            	MainUI;
-	            	break;*/
 	        }choice = this.displayOptions();
 	    }
 	}
@@ -35,7 +36,7 @@ public class MainUI {
 	    System.out.println("-1. Exit");
 	    System.out.println("1. Guest related operations");
 	    System.out.println("2. Reservation related operations");
-	    //System.out.println("3. Room related operations");
+	    System.out.println("3. Room related operations");
 	    System.out.println("Your choice: ");
 	    int choice = in.nextInt();
 	    return choice;
