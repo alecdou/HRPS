@@ -1,20 +1,21 @@
 package entity;
 
 public class Guest {
-    String guestName;
-    String creditCardDetails; // Should we create a separate class for this?
-    String address;
-    String country;
-    String gender;
-    String passport;
-    String drivingLicense;
-    String nationality;
-    String contact;
+    private String guestName;
+    private String address;
+    private String country;
+    private String gender;
+    private String passport;
+    private String drivingLicense;
+    private String nationality;
+    private String contact;
+    private CreditCard credit;
+    
     // int roomNum; //?
 
-    public Guest(String guestName, String creditCardDetails, String address, String country, String gender, String passport, String drivingLicense, String nationality, String contact) {
-        this.guestName = guestName;
-        this.creditCardDetails = creditCardDetails;
+    public Guest(String guestName, String creditCardNo, String creditBillingAddress, String address, String country, String gender, String passport, String drivingLicense, String nationality, String contact) {
+        credit = new CreditCard(creditCardNo, creditBillingAddress);
+    	this.guestName = guestName;
         this.address = address;
         this.country = country;
         this.gender = gender;
@@ -33,11 +34,12 @@ public class Guest {
     }
 
     public String getCreditCardDetails() {
-        return creditCardDetails;
+        return "Credit card No: " + credit.creditCardNumber + "\nBilling Address: " + credit.billingAddress;
     }
 
-    public void setCreditCardDetails(String creditCardDetails) {
-        this.creditCardDetails = creditCardDetails;
+    public void setCreditCardDetails(String creditCardNo, String creditBillingAddress) {
+    	this.credit.setCreditCardNumber(creditCardNo);
+    	this.credit.setBillingAddress(creditBillingAddress);
     }
 
     public String getAddress() {
@@ -95,19 +97,19 @@ public class Guest {
     public void setContact(String contact) {
         this.contact = contact;
     }
-
     @Override
     public String toString() {
-        return "Guest{" +
-                "guestName='" + guestName + '\'' +
-                ", creditCardDetails='" + creditCardDetails + '\'' +
-                ", address='" + address + '\'' +
-                ", country='" + country + '\'' +
-                ", gender='" + gender + '\'' +
-                ", passport='" + passport + '\'' +
-                ", drivingLicense='" + drivingLicense + '\'' +
-                ", nationality='" + nationality + '\'' +
-                ", contact='" + contact + '\'' +
+        return "Guest{" + '\n' + 
+                "guestName= " + guestName + '\n' +
+                "Credit card No: " + credit.creditCardNumber + '\n' + 
+                "Billing Address: " + credit.billingAddress + '\n' +
+                "address= " + address + '\n' +
+                "country= " + country + '\n' +
+                "gender= " + gender + '\n' +
+                "passport= " + passport + '\n' +
+                "drivingLicense= " + drivingLicense + '\n' +
+                "nationality= " + nationality + '\n' +
+                "contact= " + contact + '\n' +
                 '}';
     }
 }
