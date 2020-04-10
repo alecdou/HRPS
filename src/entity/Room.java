@@ -10,7 +10,7 @@ public class Room {
     RoomBedType roomBedType;
     public enum RoomFacing{NORTH, SOUTH, EAST, WEST};//deluxe 1 each, vip 2 each, suite 1 each, double 4 each, single 4 each
     RoomFacing roomFacing;
-    public enum RoomStatus{INITIALIZED, VACANT, OCCUPIED, RESERVED, MAINTENANCE};
+    public enum RoomStatus{VACANT, OCCUPIED, RESERVED, MAINTENANCE};
     RoomStatus roomStatus;
     private final String roomNumber;
     private boolean hasWifi;//2 single rooms and 2 double rooms dont have

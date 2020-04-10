@@ -1,11 +1,22 @@
 package boundary;
 
+import java.io.IOException;
 import java.util.Scanner;
+
+import controller.RoomController;
 
 public class MainUI {
 	private static Scanner in = new Scanner(System.in);
     public void run() {
 	    int choice = this.displayOptions();
+	    try {
+	    	RoomController roomController = RoomController.getInstance();
+			roomController.createRooms();
+		} catch (IOException e) {
+			System.out.println("cant run!");
+			e.printStackTrace();
+		}
+        System.out.print("All rooms successfully created.\n");
 	    while (choice != -1) {
 
 	        switch (choice) {
@@ -19,13 +30,16 @@ public class MainUI {
 	                break;
 	            case 3:
 	            	RoomUI roomUI = RoomUI.getInstance();
-				try {
+	            	try {
 					roomUI.run();
 				} catch (Exception e) {
 					System.out.println("cant run!");
 					e.printStackTrace();
 				}
 	                break;
+	            case 4:
+	            	CheckInUI checkInUI = CheckInUI.getInstance();
+	            	checkInUI.run();
 	            default:
 	            	break;
 	        }choice = this.displayOptions();
@@ -37,6 +51,7 @@ public class MainUI {
 	    System.out.println("1. Guest related operations");
 	    System.out.println("2. Reservation related operations");
 	    System.out.println("3. Room related operations");
+	    System.out.println("4. Check in");
 	    System.out.println("Your choice: ");
 	    int choice = in.nextInt();
 	    return choice;

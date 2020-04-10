@@ -5,6 +5,7 @@ public class Reservation {
 	UUID reservationCode;
 	public enum PaymentMethod{CASH, CREDITCARD}
 	PaymentMethod payment;
+	private Guest guest;
 	private String guestContact;
 	private LocalDateTime checkInTime;
 	private LocalDateTime checkOutTime;
@@ -17,8 +18,9 @@ public class Reservation {
 	
 	
 	
-	public Reservation(UUID reservationCode, PaymentMethod payment, String guestContact, LocalDateTime checkInTime, 
+	public Reservation(Guest guest, UUID reservationCode, PaymentMethod payment, String guestContact, LocalDateTime checkInTime, 
 			LocalDateTime checkOutTime, Integer numAdult, Integer numChild, String roomNum, ReservationStatus status) {
+		this.guest = guest;
 		this.payment = payment;
 		this.reservationCode = reservationCode;
 		this.guestContact = guestContact;
@@ -27,6 +29,7 @@ public class Reservation {
 		this.numAdult = numAdult;
 		this.numChild = numChild;
 		this.roomNum = roomNum;
+		this.status = status;
 		
 	}
     
