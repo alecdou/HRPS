@@ -7,7 +7,7 @@ public class MainUI {
     public void run() {
 	    int choice = this.displayOptions();
 	    while (choice != -1) {
-	    	
+
 	        switch (choice) {
 	            case 1:
 	            	GuestUI guestUI = GuestUI.getInstance();
@@ -18,7 +18,7 @@ public class MainUI {
 	            	reservationUI.run();
 	                break;
 	            case 3:
-	            	RoomUI roomUI = RoomUI.getInstance(); 
+	            	RoomUI roomUI = RoomUI.getInstance();
 				try {
 					roomUI.run();
 				} catch (Exception e) {
@@ -31,7 +31,7 @@ public class MainUI {
 	        }choice = this.displayOptions();
 	    }
 	}
-	
+
 	private int displayOptions() {
 	    System.out.println("-1. Exit");
 	    System.out.println("1. Guest related operations");

@@ -13,7 +13,7 @@ public class GuestUI {
     private static GuestUI single_instance = null;
     private GuestController guestController = GuestController.getInstance();
     private static Scanner in = new Scanner(System.in);
-    
+
     // private constructor restricted to this class itself
     private GuestUI() {}
 
@@ -86,7 +86,7 @@ public class GuestUI {
             }choice = this.displayOptions();
         }
     }
-    
+
     private List<Guest> lookForExistingGuests(String guestName){
 		 List<Guest> guests = guestController.searchGuest(guestName);//check if there is any existing reservations if (reservations.isEmpty()) {
 		 return guests;
@@ -102,7 +102,7 @@ public class GuestUI {
         return choice;
     }
 
-    
+
     private void updateGuestUI(Guest guest) {
     	System.out.println("Please enter the information that you want to update: ");
     	System.out.println("1. Guest Name ");
@@ -200,7 +200,7 @@ public class GuestUI {
     		}
 	    return;
 	}
-    
+
     private void newGuestUI(String guestName) {
     	String creditCardNo, creditBillingAddress, address, country, gender, passport, drivingLicense, nationality, contact;
     	System.out.print("Credit Card Number: ");
@@ -238,7 +238,7 @@ public class GuestUI {
         System.out.println("New guest added to the system: ");
         System.out.println(guest.toString());
     }
-    
+
 
 
 
