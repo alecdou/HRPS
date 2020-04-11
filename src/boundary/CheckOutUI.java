@@ -76,8 +76,6 @@ public class CheckOutUI {
         }
 
 
-
-
         StringBuffer sb = new StringBuffer();
         sb.append("----BILL INVOICE----\n");
 

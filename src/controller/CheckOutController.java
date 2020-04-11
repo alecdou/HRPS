@@ -10,7 +10,8 @@ public class CheckOutController {
     private Bill bill;
     private int numStay = 0, numWeekday = 0, numWeekend = 0;
     private static CheckOutController checkOutController = null;
-
+    private RoomController roomController = new RoomController();
+    private OrderController orderController = new OrderController();
     private CheckOutController(){
         this.room = null;
         this.bill = null;
@@ -24,7 +25,7 @@ public class CheckOutController {
         return checkOutController;
     }
     public void setRoomVacant(String roomNum){
-        roomController.searchRoom(roomNum).setStatus("Vacant");//set to enum VACANT
+        roomController.searchRoom(roomNum).setType("VACANT");//set to enum VACANT
     }
 
     public void setStayDays(String roomNum){
