@@ -147,8 +147,6 @@ public class CheckInUI {
 //        } catch (Exception e) {
 //            System.out.println("Check-in Failed! Please try again.");
 //        }
-//        }
-//    }
 
     private int displayOptions() {
         int choice;

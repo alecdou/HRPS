@@ -23,14 +23,10 @@ import entity.Room.RoomType;
 
 public class RoomController {
 	private List<Room> roomList;
-	private List<Room> checkedInRoomList;
-	private List<Room> reservedRoomList;
     private static RoomController RoomController = null;
 
     private RoomController() {
         this.roomList = new ArrayList<>(48);
-        this.checkedInRoomList = new ArrayList<>();
-        this.reservedRoomList = new ArrayList<>();
     }
 
     public static RoomController getInstance() {
@@ -151,8 +147,9 @@ public class RoomController {
 	}
 
 	public Room updateRoomStatus(Room room, String updatedRoomStatus) {
-		// TODO Auto-generated method stub
-		return null;
+		RoomStatus status = RoomStatus.valueOf(updatedRoomStatus);
+		room.setRoomStatus(status);
+		return room;
 	}
 
 	
