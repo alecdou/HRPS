@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class RoomController {
 	private List<Room> roomList;
     private static RoomController RoomController = null;
 
-    private RoomController() {
+    public RoomController() {
         this.roomList = new ArrayList<>(48);
     }
 
@@ -55,7 +56,7 @@ public class RoomController {
     }
     public List<Room> createRooms()throws IOException {
         //read from data file
-        Path path = Path.of("F:\\Github\\HRPS\\src\\entity\\RoomData.txt");
+        Path path = Paths.get("..\\HRPS\\src\\entity\\RoomData.txt");
         //read all lines
         List<String> lines = Files.readAllLines(path);
         for(int count = 0; count<lines.size();count++) {

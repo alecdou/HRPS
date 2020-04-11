@@ -73,9 +73,9 @@ public class GuestController {
         return guest;
     }
 
-//    public List<Guest> searchGuest(String guestName) {
-//        return guestList.stream().filter(o -> o.getGuestName().toUpperCase().equals(guestName.toUpperCase())).collect(Collectors.toList());//return a list of guest with the specified name
-//    }
+    public List<Guest> searchGuest(String guestName) {
+        return guestList.stream().filter(o -> o.getGuestName().toUpperCase().equals(guestName.toUpperCase())).collect(Collectors.toList());//return a list of guest with the specified name
+    }
     public List<Guest> searchGuestContact(String guestContact) {
         return guestList.stream().filter(o -> o.getContact().equals(guestContact)).collect(Collectors.toList());
     }

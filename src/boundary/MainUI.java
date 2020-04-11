@@ -40,6 +40,9 @@ public class MainUI {
 	            case 4:
 	            	CheckInUI checkInUI = CheckInUI.getInstance();
 	            	checkInUI.run();
+				case 5:
+					CheckOutUI checkOutUI = CheckOutUI.getInstance();
+					checkOutUI.checkOut();
 	            default:
 	            	break;
 	        }choice = this.displayOptions();
@@ -52,6 +55,7 @@ public class MainUI {
 	    System.out.println("2. Reservation related operations");
 	    System.out.println("3. Room related operations");
 	    System.out.println("4. Check in");
+	    System.out.println("5. Check out");
 	    System.out.println("Your choice: ");
 	    int choice = in.nextInt();
 	    return choice;
