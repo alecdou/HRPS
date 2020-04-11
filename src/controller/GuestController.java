@@ -74,10 +74,15 @@ public class GuestController {
     }
 
     public List<Guest> searchGuest(String guestName) {
-        return guestList.stream().filter(o -> o.getGuestName().equals(guestName)).collect(Collectors.toList());//return a list of guest with the specified name
+        return guestList.stream().filter(o -> o.getGuestName().toUpperCase().equals(guestName.toUpperCase())).collect(Collectors.toList());//return a list of guest with the specified name
+    }
+    public List<Guest> searchGuestContact(String guestContact) {
+        return guestList.stream().filter(o -> o.getContact().equals(guestContact)).collect(Collectors.toList());
     }
     
+    
     public boolean checkCreditCardInput(String creditCardNo) {
+    	//System.out.println(creditCardNo);
     	if(creditCardNo.length()==16) {
     		try {
     			long a = Long.parseLong(creditCardNo);

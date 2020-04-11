@@ -1,5 +1,6 @@
 package controller;
 
+import entity.Guest;
 import entity.Reservation;
 import entity.Reservation.PaymentMethod;
 import entity.Reservation.ReservationStatus;
@@ -27,7 +28,7 @@ public class ReservationController {
     }
     
 	
-    public Reservation createReservation(String paymentmethod, String guestContact, String checkIn, 
+    public Reservation createReservation(Guest guest, String paymentmethod, String guestContact, String checkIn, 
     		String checkOut, int adult, int child, String roomNum) {
     	
     	UUID reservationCode = UUID.randomUUID();
@@ -38,7 +39,7 @@ public class ReservationController {
 		Integer numAdult = Integer.valueOf(adult);
 		Integer numChild = Integer.valueOf(child);
 		ReservationStatus status = ReservationStatus.CONFIRMED;
-        Reservation reservation = new Reservation(reservationCode, payment, guestContact, checkInTime, 
+        Reservation reservation = new Reservation(guest, reservationCode, payment, guestContact, checkInTime, 
     			checkOutTime, numAdult, numChild, roomNum, status);        
         this.reservationList.add(reservation);
         return reservation;

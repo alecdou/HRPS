@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class RoomController {
 	private List<Room> roomList;
     private static RoomController RoomController = null;
 
-    private RoomController() {
+    public RoomController() {
         this.roomList = new ArrayList<>(48);
     }
 
@@ -35,7 +36,8 @@ public class RoomController {
         }
         return RoomController;
     }
-    public Room updateRoom(String roomNumber, String roomType, String roomBedType, String roomFacing, String roomStatus,
+    
+    public Room newRoom(String roomNumber, String roomType, String roomBedType, String roomFacing, String roomStatus,
             String hasWifi, String isSmokingFree, double rate, String checkInTime) {
     	RoomType type = RoomType.valueOf(roomType.toUpperCase());
     	RoomBedType bedType = RoomBedType.valueOf(roomBedType.toUpperCase());
@@ -54,7 +56,7 @@ public class RoomController {
     }
     public List<Room> createRooms()throws IOException {
         //read from data file
-        Path path = Path.of("F:\\Github\\HRPS\\src\\entity\\RoomData.txt");
+        Path path = Paths.get("..\\HRPS\\src\\entity\\RoomData.txt");
         //read all lines
         List<String> lines = Files.readAllLines(path);
         for(int count = 0; count<lines.size();count++) {
@@ -62,8 +64,8 @@ public class RoomController {
         	description = lines.get(count).split(",");
         	//System.out.println(description.length);
         	//System.out.println(Arrays.toString(description));
-        	Room room = updateRoom(description[0], description[1], description[2], description[3], 
-        			"initialized", description[4], description[5], 100, "1880-01-01T00:00");
+        	Room room = newRoom(description[0], description[1], description[2], description[3], 
+        			"vacant", description[4], description[5], 100, "1880-01-01T00:00");
         	roomList.add(room);
         	//break;
         }
@@ -87,8 +89,8 @@ public class RoomController {
 				rooms = roomList.stream().filter(o -> o.getGuest().getGuestName().equals(guestName)).collect(Collectors.toList());
 				break;
 			case 't':
-				String roomType = check.substring(1).toUpperCase();
-				rooms = roomList.stream().filter(o -> o.getRoomType().equals(roomType)).collect(Collectors.toList());
+				RoomType t = RoomType.valueOf(check.substring(1).toUpperCase());
+				rooms = roomList.stream().filter(o -> o.getRoomType().equals(t)).collect(Collectors.toList());
 				break;
 			default:
 				return null;
@@ -97,12 +99,42 @@ public class RoomController {
 		return rooms;
 	}
 
-	public Room updateRoomStatus(Room room, String updatedRoomStatus) {
-		RoomStatus status = RoomStatus.valueOf(updatedRoomStatus.toUpperCase());
+	//check in/out
+	public Room checkIn(String roomNumber, Guest guest) {
+		List<Room> rooms = findRoom(roomNumber);
+		Room room = rooms.get(0);
+		RoomStatus status = RoomStatus.valueOf("OCCUPIED");
 		room.setRoomStatus(status);
+		room.setGuest(guest);
 		return room;
 	}
-
+	
+	public List<Room> checkAvailableRooms(List<Room> rooms){
+		List<Room> availableRooms = new ArrayList<>();
+		for(Room room: rooms) {
+			if(room.getRoomStatus().toString().equals("VACANT")) {
+				availableRooms.add(room);
+			}
+		}
+		return availableRooms;
+	}
+	
+	public List<Room> findRoomByFacing(List<Room> rooms, String facing){
+		RoomFacing f = RoomFacing.valueOf(facing.toUpperCase());
+		List<Room> selectedRooms = rooms.stream().filter(o -> o.getRoomFacing().equals(f)).collect(Collectors.toList());
+		return selectedRooms;
+	}
+	
+	public List<Room> findRoomByType(String type){
+		return checkRoom("t" + type);
+	}
+	
+	public List<Room> findRoomByBedType(List<Room> rooms, String bedType){
+		RoomBedType t = RoomBedType.valueOf(bedType.toUpperCase());
+		List<Room> selectedRooms = rooms.stream().filter(o -> o.getRoomBedType().equals(t)).collect(Collectors.toList());
+		return selectedRooms;
+	}
+	
 	public Room updateRoomRate(Room room, double updatedRoomRate) {
 		room.setRate(updatedRoomRate);
 		return room;
@@ -112,6 +144,12 @@ public class RoomController {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");//input format:yyyy-mm-ddThh:mm	
     	LocalDateTime checkIn = LocalDateTime.parse(updatedCheckInTime, formatter);
     	room.setCheckInTime(checkIn);
+		return room;
+	}
+
+	public Room updateRoomStatus(Room room, String updatedRoomStatus) {
+		RoomStatus status = RoomStatus.valueOf(updatedRoomStatus);
+		room.setRoomStatus(status);
 		return room;
 	}
 
