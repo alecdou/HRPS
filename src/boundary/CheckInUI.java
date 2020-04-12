@@ -43,9 +43,11 @@ public class CheckInUI {
         switch (choice) {
             case 1:
                 reservationCheckInUI();
+                System.out.println("Checked in");
                 break;
             case 2:
                 walkInCheckInUI();
+                System.out.println("Checked in");
                 break;
         }
 

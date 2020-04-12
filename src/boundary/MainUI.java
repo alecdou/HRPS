@@ -40,9 +40,11 @@ public class MainUI {
 	            case 4:
 	            	CheckInUI checkInUI = CheckInUI.getInstance();
 	            	checkInUI.run();
+	            	break;
 				case 5:
 					CheckOutUI checkOutUI = CheckOutUI.getInstance();
 					checkOutUI.checkOut();
+					break;
 	            default:
 	            	break;
 	        }choice = this.displayOptions();
