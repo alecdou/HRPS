@@ -14,6 +14,14 @@ import java.util.List;
 public class OrderController {
     private static final String dir = "src/data/order.dat";
     private OrderList orderList;
+    private static OrderController OrderController = null;
+
+    public static OrderController getInstance() {
+        if (OrderController == null) {
+            OrderController = new OrderController();
+        }
+        return OrderController;
+    }
 
     public OrderController() {
         File file = new File(dir);

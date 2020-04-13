@@ -10,6 +10,14 @@ import java.util.LinkedList;
 public class MenuController {
     private static final String dir = "src/data/menu.dat";
     private Menu menu;
+    private static MenuController MenuController = null;
+
+    public static MenuController getInstance() {
+        if (MenuController == null) {
+            MenuController = new MenuController();
+        }
+        return MenuController;
+    }
 
     public MenuController() {
         File file = new File(dir);
