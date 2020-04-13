@@ -19,7 +19,7 @@ public class ServiceUI {
         oc = new OrderController();
     }
 
-    public void launch() {
+    public void run() {
         int option;
         String roomNum;
         option = choose();

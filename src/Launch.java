@@ -1,11 +1,10 @@
-import boundary.CheckInUI;
-import boundary.MainUI;
+import boundary.*;
 
 public class Launch {
 
     public static void main(String[] args) {
-        MainUI mainUI = new MainUI();
-        mainUI.run();
-
+//        MainUI mainUI = new MainUI();
+//        mainUI.run();
+        new ServiceUI().run();
     }
 }
