@@ -38,10 +38,6 @@ public class MainUI {
 					e.printStackTrace();
 				}
 	                break;
-	            case 6:
-	            	ServiceUI serviceUI = new ServiceUI();
-	            	serviceUI.launch();
-	                break;
 	            case 4:
 	            	CheckInUI checkInUI = CheckInUI.getInstance();
 	            	checkInUI.run();
@@ -49,6 +45,10 @@ public class MainUI {
 				case 5:
 					CheckOutUI checkOutUI = CheckOutUI.getInstance();
 					checkOutUI.checkOut();
+					break;
+				case 6:
+					ServiceUI serviceUI = new ServiceUI();
+					serviceUI.run();
 					break;
 	            default:
 	            	break;

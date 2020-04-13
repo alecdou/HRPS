@@ -4,27 +4,32 @@ import controller.MenuController;
 import controller.OrderController;
 import controller.RoomController;
 import entity.MenuItem;
+import entity.Order;
 
+import java.security.Provider;
 import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
 public class ServiceUI {
-    private MenuController mc;
-    private OrderController oc;
+    private static ServiceUI single_instance = null;
+    private MenuController mc = MenuController.getInstance();
+    private OrderController oc = OrderController.getInstance();
+    private RoomController rc = RoomController.getInstance();
     private static Scanner in = new Scanner(System.in);
 
-    public ServiceUI() {
-        mc = new MenuController();
-        oc = new OrderController();
+    public static ServiceUI getInstance()
+    {
+        if (single_instance == null)
+            single_instance = new ServiceUI();
+        return single_instance;
     }
 
-    public void launch() {
+    public void run() {
         int option;
         String roomNum;
         option = choose();
-        RoomController rc = new RoomController();
 
         while (option != 0) {
             switch (option) {
@@ -106,9 +111,8 @@ public class ServiceUI {
                 case 5:
                     System.out.print("Enter room number to make order: ");
                     in.nextLine();
-                    roomNum = "06-04";//in.nextLine();
+                    roomNum = in.nextLine();
                     // check validity of room number
-                    System.out.print(rc.findRoom(roomNum));
                     if (!rc.findRoom(roomNum).isEmpty()) {
                         mc.displayMenu();
 
@@ -140,9 +144,10 @@ public class ServiceUI {
                     }
                     break;
                 case 6:
+                    // RoomController rc = new RoomController();
                     System.out.print("Enter room number to print order: ");
                     in.nextLine();
-                    roomNum = "06-04";//in.nextLine();
+                    roomNum = in.nextLine();
 
                     System.out.println("Order Details:");
                     // check validity of room number
