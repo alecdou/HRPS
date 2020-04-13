@@ -129,13 +129,9 @@ public class CheckOutUI {
         System.out.println("Successfully check out!");
     }
 
-    private boolean isValidRoomNum(String roomNum){
-        if(roomNum.length()==5){
-            if(roomNum.charAt(0) == '0' && roomNum.charAt(2) == '-' && roomNum.charAt(3) == '0'){
-                if(roomNum.charAt(1) >= '2' && roomNum.charAt(1) <= '7' && roomNum.charAt(4) >= '1' && roomNum.charAt(4) <= 8){
-                    return true;
-                }
-            }
+    public boolean isValidRoomNum(String roomNum){
+        if(Character.getNumericValue(roomNum.charAt(0))==0 && (Character.getNumericValue(roomNum.charAt(1))>=2 && Character.getNumericValue(roomNum.charAt(1))<=7) && roomNum.charAt(2)=='-' && Character.getNumericValue(roomNum.charAt(3))==0 && (Character.getNumericValue(roomNum.charAt(4))>=1 && Character.getNumericValue(roomNum.charAt(1))<=8)){
+            return true;
         }
         return false;
     }
