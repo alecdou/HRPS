@@ -2,21 +2,28 @@ package boundary;
 
 import controller.MenuController;
 import controller.OrderController;
+import controller.RoomController;
 import entity.MenuItem;
+import entity.Order;
 
+import java.security.Provider;
 import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
 public class ServiceUI {
-    private MenuController mc;
-    private OrderController oc;
+    private static ServiceUI single_instance = null;
+    private MenuController mc = MenuController.getInstance();
+    private OrderController oc = OrderController.getInstance();
+    private RoomController rc = RoomController.getInstance();
     private static Scanner in = new Scanner(System.in);
 
-    public ServiceUI() {
-        mc = new MenuController();
-        oc = new OrderController();
+    public static ServiceUI getInstance()
+    {
+        if (single_instance == null)
+            single_instance = new ServiceUI();
+        return single_instance;
     }
 
     public void run() {
@@ -102,13 +109,11 @@ public class ServiceUI {
                     System.out.println();
                     break;
                 case 5:
-//                    RoomController rc = new RoomController();
                     System.out.print("Enter room number to make order: ");
                     in.nextLine();
                     roomNum = in.nextLine();
                     // check validity of room number
-//                    if (rc.getRoomDetails(roomNum) != null) {
-                    if (roomNum.equals("")) {    // FOR COMPILE PASS, TO BE COMMENTED
+                    if (!rc.findRoom(roomNum).isEmpty()) {
                         mc.displayMenu();
 
                         String itemName, remarks;
@@ -146,8 +151,7 @@ public class ServiceUI {
 
                     System.out.println("Order Details:");
                     // check validity of room number
-//                    if (rc.getRoomDetails(roomNum) != null) {
-                    if (roomNum.equals("")) {    // FOR COMPILE PASS, TO BE COMMENTED
+                    if (!rc.findRoom(roomNum).isEmpty()) {
                         oc.printOrder(roomNum);
 //                        System.out.println(oc.getTotalPrice(roomNum,
 //                                LocalDateTime.of(2020, 4, 2, 0, 0),
