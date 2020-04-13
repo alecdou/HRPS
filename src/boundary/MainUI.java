@@ -8,7 +8,7 @@ import controller.RoomController;
 public class MainUI {
 	private static Scanner in = new Scanner(System.in);
     public void run() {
-	    int choice = this.displayOptions();
+	    
 	    try {
 	    	RoomController roomController = RoomController.getInstance();
 			roomController.createRooms();
@@ -17,6 +17,7 @@ public class MainUI {
 			e.printStackTrace();
 		}
         System.out.print("All rooms successfully created.\n");
+        int choice = this.displayOptions();
 	    while (choice != -1) {
 
 	        switch (choice) {
@@ -36,6 +37,10 @@ public class MainUI {
 					System.out.println("cant run!");
 					e.printStackTrace();
 				}
+	                break;
+	            case 6:
+	            	ServiceUI serviceUI = new ServiceUI();
+	            	serviceUI.launch();
 	                break;
 	            case 4:
 	            	CheckInUI checkInUI = CheckInUI.getInstance();
@@ -58,8 +63,10 @@ public class MainUI {
 	    System.out.println("3. Room related operations");
 	    System.out.println("4. Check in");
 	    System.out.println("5. Check out");
+	    System.out.println("6. Service related operations");
 	    System.out.println("Your choice: ");
 	    int choice = in.nextInt();
+	    in.nextLine();
 	    return choice;
 	}
 }

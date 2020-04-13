@@ -125,6 +125,12 @@ public class RoomController {
 		return selectedRooms;
 	}
 	
+	public List<Room> findRoomByStatus(List<Room> rooms, String status){
+		RoomStatus s = RoomStatus.valueOf(status.toUpperCase());
+		List<Room> selectedRooms = rooms.stream().filter(o -> o.getRoomStatus().equals(s)).collect(Collectors.toList());
+		return selectedRooms;
+	}
+	
 	public List<Room> findRoomByType(String type){
 		return checkRoom("t" + type);
 	}

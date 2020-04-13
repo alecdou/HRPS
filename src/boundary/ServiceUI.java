@@ -2,6 +2,7 @@ package boundary;
 
 import controller.MenuController;
 import controller.OrderController;
+import controller.RoomController;
 import entity.MenuItem;
 
 import java.util.InputMismatchException;
@@ -23,6 +24,7 @@ public class ServiceUI {
         int option;
         String roomNum;
         option = choose();
+        RoomController rc = new RoomController();
 
         while (option != 0) {
             switch (option) {
@@ -102,13 +104,12 @@ public class ServiceUI {
                     System.out.println();
                     break;
                 case 5:
-//                    RoomController rc = new RoomController();
                     System.out.print("Enter room number to make order: ");
                     in.nextLine();
-                    roomNum = in.nextLine();
+                    roomNum = "06-04";//in.nextLine();
                     // check validity of room number
-//                    if (rc.getRoomDetails(roomNum) != null) {
-                    if (roomNum.equals("")) {    // FOR COMPILE PASS, TO BE COMMENTED
+                    System.out.print(rc.findRoom(roomNum));
+                    if (!rc.findRoom(roomNum).isEmpty()) {
                         mc.displayMenu();
 
                         String itemName, remarks;
@@ -139,15 +140,13 @@ public class ServiceUI {
                     }
                     break;
                 case 6:
-                    // RoomController rc = new RoomController();
                     System.out.print("Enter room number to print order: ");
                     in.nextLine();
-                    roomNum = in.nextLine();
+                    roomNum = "06-04";//in.nextLine();
 
                     System.out.println("Order Details:");
                     // check validity of room number
-//                    if (rc.getRoomDetails(roomNum) != null) {
-                    if (roomNum.equals("")) {    // FOR COMPILE PASS, TO BE COMMENTED
+                    if (!rc.findRoom(roomNum).isEmpty()) {
                         oc.printOrder(roomNum);
 //                        System.out.println(oc.getTotalPrice(roomNum,
 //                                LocalDateTime.of(2020, 4, 2, 0, 0),
