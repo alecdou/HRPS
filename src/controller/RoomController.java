@@ -154,7 +154,7 @@ public class RoomController {
 	}
 
 	public Room updateRoomStatus(Room room, String updatedRoomStatus) {
-		RoomStatus status = RoomStatus.valueOf(updatedRoomStatus);
+		RoomStatus status = RoomStatus.valueOf(updatedRoomStatus.toUpperCase());
 		room.setRoomStatus(status);
 		return room;
 	}

@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
+import controller.CheckInputController;
 import controller.GuestController;
 import controller.ReservationController;
 import controller.RoomController;
@@ -23,6 +24,7 @@ public class CheckInUI {
     private GuestController gc = GuestController.getInstance();
     private ReservationController resc = ReservationController.getInstance();
     private RoomUI rui = RoomUI.getInstance();
+    private CheckInputController inputCheck = CheckInputController.getInstance();
     private RoomController rc = RoomController.getInstance();
     private Scanner in = new Scanner(System.in);
 
@@ -43,11 +45,9 @@ public class CheckInUI {
         switch (choice) {
             case 1:
                 reservationCheckInUI();
-                System.out.println("Checked in");
                 break;
             case 2:
                 walkInCheckInUI();
-                System.out.println("Checked in");
                 break;
         }
 
@@ -73,17 +73,27 @@ public class CheckInUI {
 	        // call the guest ui to create a new guest
 	        System.out.print("Please enter Guest Contact: ");
 	    	String guestContact = in.nextLine().trim().replace(" ", "");
-            boolean valid = gc.checkContactInput(guestContact);
+            boolean valid = inputCheck.checkContactInput(guestContact);
             while(valid!=true) {
             	System.out.print("Invalid Contact. Please re-enter Contact: ");
                 guestContact = in.nextLine().trim().replace(" ", "");
-                valid = gc.checkContactInput(guestContact);
+                valid = inputCheck.checkContactInput(guestContact);
             }
         	guestContact = in.nextLine().trim();
 	        List<Guest> guests = guestUI.lookForExistingGuests(guestContact);
 	        if(guests.isEmpty()) {
 	        	newGuest = guestUI.newGuestUI(guestContact);
+	        	System.out.print("Please input Check In time (yyyy-MM-dd HH:mm): ");
+	            String time = in.nextLine().trim().replace(" ", "T");
+	            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+	        	LocalDateTime checkInTime = LocalDateTime.parse(time, formatter);
 	        	checkedIn = rc.checkIn(roomNumber, newGuest);
+	        	checkedIn.setCheckInTime(checkInTime);
+                System.out.println("Checked in: \n");
+                System.out.println("Guest Information: --------------------\n");
+                System.out.println(newGuest.toString());
+                System.out.println("Room Information: --------------------\n");
+                System.out.println(rc.findRoom(roomNumber).get(0).toString());
 	        }
 	        else {//if there are existing guests
 				System.out.println("Similar records are present in the system: ");
@@ -97,16 +107,22 @@ public class CheckInUI {
 	                in.nextLine();
 	                if(choice2 == 1) {//it has to be yes because with the same contact number, no new guest can be created 
 	                	checkedIn = rc.checkIn(roomNumber, guest);
+	                	System.out.print("Please input Check In time (yyyy-MM-dd HH:mm): ");
+	                    String time = in.nextLine().trim().replace(" ", "T");
+	                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+	                	LocalDateTime checkInTime = LocalDateTime.parse(time, formatter);
+	                    checkedIn.setCheckInTime(checkInTime);
+	                	System.out.println("Checked in: \n");
+	                    System.out.println("Guest Information: --------------------\n");
+	                    System.out.println(guest.toString());
+	                    System.out.println("Room Information: --------------------\n");
+	                    System.out.println(rc.findRoom(roomNumber).get(0).toString());
 	                	break;
 	                }
 	        	}
 	        }
     	}
-        System.out.print("Please input Check In time (yyyy-MM-dd HH:mm): ");
-        String time = in.nextLine().trim().replace(" ", "T");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-    	LocalDateTime checkInTime = LocalDateTime.parse(time, formatter);
-        checkedIn.setCheckInTime(checkInTime);
+        
     }
 
     private void reservationCheckInUI() {
@@ -131,6 +147,11 @@ public class CheckInUI {
         	Room checkedIn = rc.checkIn(res.getRoomNum(), guest);
         	ReservationStatus status = ReservationStatus.CHECKEDIN;
             res.setStatus(status);
+            System.out.println("Checked in: \n");
+            System.out.println("Guest Information: --------------------\n");
+            System.out.println(guest.toString());
+            System.out.println("Room Information: --------------------\n");
+            System.out.println(res.toString());
         }
     }
 

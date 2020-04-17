@@ -80,31 +80,4 @@ public class GuestController {
         return guestList.stream().filter(o -> o.getContact().equals(guestContact)).collect(Collectors.toList());
     }
     
-    
-    public boolean checkCreditCardInput(String creditCardNo) {
-    	//System.out.println(creditCardNo);
-    	if(creditCardNo.length()==16) {
-    		try {
-    			long a = Long.parseLong(creditCardNo);
-    			return true;
-    		}
-    		catch(Exception e) {
-    			return false;
-    		}
-    	}
-    	else {return false;}
-    }
-    
-    public boolean checkContactInput(String contact) {
-    	if(contact.length()<=15) {
-    		try {
-    			Long b = Long.parseLong(contact);
-    			return true;
-    		}
-    		catch(Exception e) {
-    			return false;
-    		}
-    	}
-    	else {return false;}
-    }
 }

@@ -17,8 +17,8 @@ public class MainUI {
 			e.printStackTrace();
 		}
         System.out.print("All rooms successfully created.\n");
-        int choice = this.displayOptions();
-	    while (choice != -1) {
+       	int choice = this.displayOptions();
+	    while (choice != 0) {
 
 	        switch (choice) {
 	            case 1:
@@ -57,16 +57,30 @@ public class MainUI {
 	}
 
 	private int displayOptions() {
-	    System.out.println("-1. Exit");
-	    System.out.println("1. Guest related operations");
-	    System.out.println("2. Reservation related operations");
-	    System.out.println("3. Room related operations");
-	    System.out.println("4. Check in");
-	    System.out.println("5. Check out");
-	    System.out.println("6. Service related operations");
-	    System.out.println("Your choice: ");
-	    int choice = in.nextInt();
-	    in.nextLine();
-	    return choice;
+		int choice;
+		while (true) {
+            try {
+			    System.out.println("0. Exit");
+			    System.out.println("1. Guest related operations");
+			    System.out.println("2. Reservation related operations");
+			    System.out.println("3. Room related operations");
+			    System.out.println("4. Check in");
+			    System.out.println("5. Check out");
+			    System.out.println("6. Service related operations");
+			    System.out.println("Your choice: ");
+			    choice = in.nextInt();
+			    in.nextLine();
+			    if (0 <= choice && choice <= 6) {
+                    return choice;
+                } else {
+                    System.out.println("ERROR: The input should be 0, 1, 2, 3, 4, 5 or 6");
+                    System.out.println("Please select again:");
+                }
+            } catch (Exception e) {
+                System.out.println("ERROR: The input should be of type (int)");
+                System.out.println("Please select again:");
+                in.nextLine(); // clear dummy characters
+            }
+		}
 	}
 }

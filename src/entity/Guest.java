@@ -99,7 +99,21 @@ public class Guest {
     }
     @Override
     public String toString() {
-        return "Guest{" + '\n' + 
+        if(passport == String.valueOf(0)) {
+        	return "Guest{" + '\n' + 
+                "guestName= " + guestName + '\n' +
+                "Credit card No: " + credit.creditCardNumber + '\n' + 
+                "Billing Address: " + credit.billingAddress + '\n' +
+                "address= " + address + '\n' +
+                "country= " + country + '\n' +
+                "gender= " + gender + '\n' +
+                "drivingLicense= " + drivingLicense + '\n' +
+                "nationality= " + nationality + '\n' +
+                "contact= " + contact + '\n' +
+                '}';
+        }
+        else {
+        	return "Guest{" + '\n' + 
                 "guestName= " + guestName + '\n' +
                 "Credit card No: " + credit.creditCardNumber + '\n' + 
                 "Billing Address: " + credit.billingAddress + '\n' +
@@ -107,9 +121,10 @@ public class Guest {
                 "country= " + country + '\n' +
                 "gender= " + gender + '\n' +
                 "passport= " + passport + '\n' +
-                "drivingLicense= " + drivingLicense + '\n' +
                 "nationality= " + nationality + '\n' +
                 "contact= " + contact + '\n' +
                 '}';
+        }
+    	
     }
 }
