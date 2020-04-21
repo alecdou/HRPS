@@ -90,7 +90,17 @@ public class ReservationController {
     public List<Reservation> searchReservation(String guestContact) {
         return reservationList.stream().filter(o -> o.getGuestContact().equals(guestContact)).collect(Collectors.toList());//return a list of reservations with the specified contact number
     }
-    
+
+    public List<Reservation> getReservationByRoom(String roomNum) {
+        List<Reservation> roomResList = new ArrayList<>();
+        for (Reservation reservation: reservationList) {
+            if (reservation.getRoomNum().equals(roomNum)) {
+                roomResList.add(reservation);
+            }
+        }
+        return roomResList;
+    }
+
     public List<Reservation> getAllReservations(){
     	return reservationList;
     }
@@ -100,7 +110,7 @@ public class ReservationController {
     }
     
     public boolean checkContactInput(String contact) {
-    	if(contact.length()<=15) {
+    	if(contact.length()==8) {
     		try {
     			Long b = Long.parseLong(contact);
     			return true;

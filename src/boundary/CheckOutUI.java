@@ -59,11 +59,11 @@ public class CheckOutUI {
 
         System.out.println("Any promotion for the guest?(Y/N)");
         promotionStr = sc.nextLine();
-        while(promotionStr!="Y" || promotionStr!="N"){
-            System.out.println("Please entre Y or N, one upper case character:");
+        while(!promotionStr.equals("Y") && !promotionStr.equals("N")) {
+            System.out.println("Please enter Y or N, one upper case character:");
             promotionStr = sc.nextLine();
         }
-        if(promotionStr=="Y"){
+        if(promotionStr.equals("Y")){
             promotion = true;
         }
         else{

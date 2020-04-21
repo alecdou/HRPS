@@ -118,6 +118,31 @@ public class RoomController {
 		}
 		return availableRooms;
 	}
+
+	public List<Room> checkAvailableRooms(List<Room> rooms, String checkIn, String checkOut){
+		List<Room> availableRooms = new ArrayList<>();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");//input format:yyyy-mm-ddThh:mm
+		LocalDateTime checkInTime = LocalDateTime.parse(checkIn, formatter);
+		LocalDateTime checkOutTime = LocalDateTime.parse(checkOut, formatter);
+		ReservationController rc = ReservationController.getInstance();
+		for(Room room: rooms) {
+			if(room.getRoomStatus().toString().equals("VACANT")) {
+				availableRooms.add(room);
+			} else if (room.getRoomStatus().toString().equals("RESERVED")) {
+				boolean flag = true;
+				for (Reservation reservation: rc.getReservationByRoom(room.getRoomNumber())) {
+					if (!(reservation.getCheckInTime().isAfter(checkOutTime) ||
+							reservation.getCheckOutTime().isBefore(checkInTime))) {
+						flag = false;
+						break;
+					}
+				}
+				if (flag)
+					availableRooms.add(room);
+			}
+		}
+		return availableRooms;
+	}
 	
 	public List<Room> findRoomByFacing(List<Room> rooms, String facing){
 		RoomFacing f = RoomFacing.valueOf(facing.toUpperCase());
@@ -154,7 +179,7 @@ public class RoomController {
 	}
 
 	public Room updateRoomStatus(Room room, String updatedRoomStatus) {
-		RoomStatus status = RoomStatus.valueOf(updatedRoomStatus);
+		RoomStatus status = RoomStatus.valueOf(updatedRoomStatus.toUpperCase());
 		room.setRoomStatus(status);
 		return room;
 	}
