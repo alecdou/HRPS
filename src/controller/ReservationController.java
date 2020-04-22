@@ -1,23 +1,35 @@
 package controller;
 
 import entity.Guest;
+import entity.OrderList;
 import entity.Reservation;
 import entity.Reservation.PaymentMethod;
 import entity.Reservation.ReservationStatus;
+import tool.SerializeDB;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class ReservationController {
+    private static final String dir = "src/data/reservation.dat";
 	private List<Reservation> reservationList;
     private static ReservationController reservationController = null;
 
     private ReservationController() {
-        this.reservationList = new ArrayList<>();
+        File file = new File(dir);
+        if (file.exists()) {
+            reservationList = (List<Reservation>) SerializeDB.readSerializedObject(dir);
+        } else {
+            file.getParentFile().mkdir();
+            reservationList = new LinkedList<>();
+            SerializeDB.writeSerializedObject(dir, reservationList);
+        }
     }
 
     public static ReservationController getInstance() {

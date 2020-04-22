@@ -9,6 +9,7 @@ import entity.Room;
 import entity.Room.RoomStatus;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
@@ -223,8 +224,11 @@ public class ReservationUI {
 		else {
 			System.out.println("Printing all reservations in the system record...");
 			for(Reservation reservation : reservations) {
-				System.out.println(reservation.toString());
-				System.out.print('\n');
+				// filter expired reservation
+				if (reservation.getCheckInTime().isBefore(LocalDateTime.now())) {
+					System.out.println(reservation.toString());
+					System.out.print('\n');
+				}
 			}
 		}
 
