@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import entity.Guest;
@@ -193,6 +194,33 @@ public class RoomController {
 		RoomStatus status = RoomStatus.valueOf(updatedRoomStatus.toUpperCase());
 		room.setRoomStatus(status);
 		return room;
+	}
+
+	public void printReport(String indicator) {
+    	if (indicator.equals("RoomType")) {
+    		String[] types = {"SINGLE", "DOUBLE", "DELUXE", "VIP", "SUITE"};
+			for (String type: types) {
+				List<Room> rooms = findRoomByType(type);
+				List<Room> occupied = rooms.stream().filter(o -> o.getRoomStatus().equals("OCCUPIED")).collect(Collectors.toList());
+				int occuptNum = occupied.size();
+				System.out.println(String.format("%s: Number: %d out of %d", type, occuptNum, rooms.size()));
+				System.out.print("Rooms: ");
+				for (Room room: occupied) {
+					System.out.print(room.getRoomNumber() + " ");
+				}
+				System.out.println();
+			}
+		} else if (indicator.equals("RoomStatus")) {
+    		String[] statuses = {"VACANT", "OCCUPIED", "RESERVED", "MAINTENANCE"};
+    		for (String status: statuses) {
+    			List<Room> rooms = findRoomByStatus(roomList, status);
+				System.out.println(status + ":");
+				for (Room room: rooms) {
+					System.out.print(room.getRoomNumber() + " ");
+				}
+				System.out.println();
+			}
+		}
 	}
 
 	

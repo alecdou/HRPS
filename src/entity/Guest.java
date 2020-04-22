@@ -1,6 +1,9 @@
 package entity;
 
-public class Guest {
+import java.io.Serializable;
+
+public class Guest implements Serializable {
+    private static final long serialVersionUID = 4495062569469348968L;
     private String guestName;
     private String address;
     private String country;
