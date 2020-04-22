@@ -66,7 +66,7 @@ public class RoomController {
         	//System.out.println(description.length);
         	//System.out.println(Arrays.toString(description));
         	Room room = newRoom(description[0], description[1], description[2], description[3], 
-        			"vacant", description[4], description[5], 100, "1880-01-01T00:00");
+        			description[6], description[4], description[5], 100, "1880-01-01T00:00");
         	roomList.add(room);
         	//break;
         }
@@ -202,8 +202,8 @@ public class RoomController {
 			for (String type: types) {
 				List<Room> rooms = findRoomByType(type);
 				List<Room> occupied = rooms.stream().filter(o -> o.getRoomStatus().equals("OCCUPIED")).collect(Collectors.toList());
-				int occuptNum = occupied.size();
-				System.out.println(String.format("%s: Number: %d out of %d", type, occuptNum, rooms.size()));
+				int occupyNum = occupied.size();
+				System.out.println(String.format("%s: Number: %d out of %d", type, occupyNum, rooms.size()));
 				System.out.print("Rooms: ");
 				for (Room room: occupied) {
 					System.out.print(room.getRoomNumber() + " ");

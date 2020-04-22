@@ -126,7 +126,7 @@ public class Room {
 //            "checkInTime= " + checkInTime.toString().replace("T", " ") + '\n' +
 //            '}';
         StringBuilder sb = new StringBuilder();
-        String room = String.format("%s -> %s -> %s -> %s -> %s -> %s -> %s", roomNumber, roomBedType.toString(), roomBedType.toString(),
+        String room = String.format("%s -> %s -> %s -> %s -> %s -> %s -> %s", roomNumber, roomType.toString(), roomBedType.toString(),
                 roomFacing.toString(), hasWifi ? "Yes" : "No", isSmokingFree ? "Yes" : "No", "S$" + rate);
         sb.append(room);
         return sb.toString();

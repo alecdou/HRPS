@@ -54,17 +54,20 @@ public class ReservationController {
         Reservation reservation = new Reservation(guest, reservationCode, payment, guestContact, checkInTime, 
     			checkOutTime, numAdult, numChild, roomNum, status);        
         this.reservationList.add(reservation);
+        SerializeDB.writeSerializedObject(dir, reservationList);
         return reservation;
     }
     
     public Reservation updateContact(Reservation reservation, String updatedContact) {
     	reservation.setGuestContact(updatedContact);
+        SerializeDB.writeSerializedObject(dir, reservationList);
     	return reservation;
     }
     
     public Reservation updatePayment (Reservation reservation, String updatedPaymentmethod) {
     	PaymentMethod payment = PaymentMethod.valueOf(updatedPaymentmethod.toUpperCase());
     	reservation.setPayment(payment);
+        SerializeDB.writeSerializedObject(dir, reservationList);
     	return reservation;
     }
     
@@ -72,6 +75,7 @@ public class ReservationController {
     	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
     	LocalDateTime checkInTime = LocalDateTime.parse(updatedCheckIn, formatter);
     	reservation.setCheckInTime(checkInTime);
+        SerializeDB.writeSerializedObject(dir, reservationList);
     	return reservation;
     }
     
@@ -79,23 +83,27 @@ public class ReservationController {
     	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 		LocalDateTime checkOutTime = LocalDateTime.parse(updatedCheckOut, formatter);
         reservation.setCheckOutTime(checkOutTime);
+        SerializeDB.writeSerializedObject(dir, reservationList);
     	return reservation;
     }
     
     public Reservation updateNumberOfGuests(Reservation reservation, int updatedAdult, int updatedChild) {
         reservation.setNumAdult(updatedAdult);
         reservation.setNumChild(updatedChild);
+        SerializeDB.writeSerializedObject(dir, reservationList);
     	return reservation;
     }
     
     public Reservation updateRoomNum(Reservation reservation, String updatedRoomNum) {
     	reservation.setRoomNum(updatedRoomNum);
+        SerializeDB.writeSerializedObject(dir, reservationList);
     	return reservation;
     }
     
     public Reservation updateStatus(Reservation reservation, String updatedStatus) {
     	ReservationStatus status = ReservationStatus.valueOf(updatedStatus.toUpperCase());
     	reservation.setStatus(status);
+        SerializeDB.writeSerializedObject(dir, reservationList);
     	return reservation;
     }
     
