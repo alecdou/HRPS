@@ -2,15 +2,19 @@ package boundary;
 
 import controller.CheckOutController;
 import controller.GuestController;
+import controller.RoomController;
 import entity.Guest;
 import entity.PaymentMethod;
+import entity.Room;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class CheckOutUI {
     private static CheckOutUI checkOutUI_instance = null;
+    private RoomController roomController = RoomController.getInstance();
     private CheckOutController checkOutController = CheckOutController.getInstance();
     private GuestController guestController = GuestController.getInstance();
 
@@ -31,31 +35,35 @@ public class CheckOutUI {
 
         System.out.println("Enter guest name for check-out service: ");
         String guestName = sc.nextLine();
-        List<Guest> guests = guestController.searchGuest(guestName);
-        while(guests.isEmpty()){
+//        List<Guest> guests = guestController.searchGuest(guestName);
+        List<Room> rooms = roomController.findRoomByName(guestName);
+
+        while(rooms.isEmpty()){
             System.out.println("No records found! Enter correct name: "); //test bad input
             guestName = sc.nextLine();
-            guests = guestController.searchGuest(guestName);
+            rooms = roomController.findRoomByName(guestName);
         }
-        for(Guest g : guests){
-            System.out.println(g.toString());
+
+        for (Room room: rooms) {
+            System.out.println(room.toString());
         }
+
         int i = 0;
-        if(guests.size()>1){
+        if(rooms.size()>1){
             System.out.println("Multiple guests with same name, enter line number of guest with matched identity:");
             //is size>1, there will be multiple rows, get guests[i].roomNum for updating room status
             i = sc.nextInt();
         }
-//        roomNum = guests.get(i).getRoomNum();
+        roomNum = rooms.get(i).getRoomNumber();
 
-        System.out.println("Enter room number for check-out service: ");
-        roomNum = sc.nextLine();
-        while(!isValidRoomNum(roomNum)){
-            System.out.println("Room number is not valid!");
-            System.out.println("Enter room number for check-out service: ");
-            roomNum = sc.nextLine();
-        }
-
+//        System.out.println("Enter room number for check-out service: ");
+//        roomNum = sc.nextLine();
+//
+//        while(!isValidRoomNum(roomNum)){
+//            System.out.println("Room number is not valid!");
+//            System.out.println("Enter room number for check-out service: ");
+//            roomNum = sc.nextLine();
+//        }
 
         System.out.println("Any promotion for the guest?(Y/N)");
         promotionStr = sc.nextLine();
@@ -90,9 +98,9 @@ public class CheckOutUI {
 
         //print days of stay
         checkOutController.setStayDays(roomNum);
-        sb.append(checkOutController.getNumStay() +  "days of stay.  "
+        sb.append(checkOutController.getNumStay() +  " days of stay. "
                 + checkOutController.getNumWeekday() + " weekdays and "
-                + checkOutController.getNumWeekend() + "weekend days\n");
+                + checkOutController.getNumWeekend() + " weekend days\n");
 
         //print total room charge
         sb.append("Total room charge: " + checkOutController.getRoomCharge());
@@ -104,7 +112,7 @@ public class CheckOutUI {
         sb.append("\n");
 
         //print tax
-        sb.append("Tax: " + checkOutController.getTax());
+        sb.append(String.format("Tax: %.2f", checkOutController.getTax()));
         sb.append("\n");
 
 
@@ -121,7 +129,7 @@ public class CheckOutUI {
         //print guest details and payment details
         System.out.print("Guest name: " + guestName +"\nPayment method: " + PaymentMethod.fromString(paymentMethodStr));
         if(paymentChoice==2){
-            System.out.print(" details: " + guests.get(i).getCreditCardDetails());
+            System.out.print(" details: " + rooms.get(i).getGuest().getCreditCardDetails());
         }
         System.out.println();
 
@@ -130,9 +138,6 @@ public class CheckOutUI {
     }
 
     public boolean isValidRoomNum(String roomNum){
-        if(Character.getNumericValue(roomNum.charAt(0))==0 && (Character.getNumericValue(roomNum.charAt(1))>=2 && Character.getNumericValue(roomNum.charAt(1))<=7) && roomNum.charAt(2)=='-' && Character.getNumericValue(roomNum.charAt(3))==0 && (Character.getNumericValue(roomNum.charAt(4))>=1 && Character.getNumericValue(roomNum.charAt(1))<=8)){
-            return true;
-        }
-        return false;
+        return !roomController.findRoom(roomNum).isEmpty();
     }
 }

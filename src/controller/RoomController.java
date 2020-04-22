@@ -76,6 +76,17 @@ public class RoomController {
         return roomList.stream().filter(o -> o.getRoomNumber().equals(roomNumber)).collect(Collectors.toList());
     }
 
+    public List<Room> findRoomByName(String name) {
+//    	return roomList.stream().filter(o -> o.getGuest().getGuestName().equals(name)).collect(Collectors.toList());
+		List<Room> rooms = new ArrayList<>();
+		for (Room room: roomList) {
+			if (room.getGuest() != null && room.getGuest().getGuestName().equals(name)) {
+				rooms.add(room);
+			}
+		}
+		return rooms;
+	}
+
 	public List<Room> checkRoom(String check) {
 		char type = check.charAt(0);
 		List<Room> rooms;

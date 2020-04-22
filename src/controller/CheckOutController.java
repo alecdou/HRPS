@@ -9,12 +9,12 @@ public class CheckOutController {
     private Room room;
     private Bill bill;
     private int numStay = 0, numWeekday = 0, numWeekend = 0;
-    private static controller.CheckOutController checkOutController = null;
-    private RoomController roomController = new RoomController();
-    private OrderController orderController = new OrderController();
+    private static CheckOutController checkOutController = null;
+    private RoomController roomController = RoomController.getInstance();
+    private OrderController orderController = OrderController.getInstance();
     private CheckOutController(){
         this.room = null;
-        this.bill = null;
+        this.bill = new Bill();
     }
 
 
@@ -32,10 +32,11 @@ public class CheckOutController {
         room = roomController.findRoom(roomNum).get(0);
         LocalDate begin = room.getCheckInTime().toLocalDate();
         LocalDate end = bill.getBillingTime().toLocalDate();
-        while (!begin.equals(end)){
-            begin.plusDays(1);
+        numStay = 0;
+        while (begin.isBefore(end)){
+            begin = begin.plusDays(1);
             //for example: 01/04 to 02/04 is one day of stay, so INC is required, otherwise will be 2 days
-            numStay++;
+//            numStay++;
             DayOfWeek dayOfWeek = begin.getDayOfWeek();
             switch(dayOfWeek.getValue()){  //whether this day is weekday: different rate
                 case 1:
