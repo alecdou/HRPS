@@ -201,7 +201,7 @@ public class RoomController {
     		String[] types = {"SINGLE", "DOUBLE", "DELUXE", "VIP", "SUITE"};
 			for (String type: types) {
 				List<Room> rooms = findRoomByType(type);
-				List<Room> occupied = rooms.stream().filter(o -> o.getRoomStatus().equals("OCCUPIED")).collect(Collectors.toList());
+				List<Room> occupied = rooms.stream().filter(o -> o.getRoomStatus().toString().equals("OCCUPIED")).collect(Collectors.toList());
 				int occupyNum = occupied.size();
 				System.out.println(String.format("%s: Number: %d out of %d", type, occupyNum, rooms.size()));
 				System.out.print("Rooms: ");

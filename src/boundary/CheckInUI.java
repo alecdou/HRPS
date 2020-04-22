@@ -107,6 +107,7 @@ public class CheckInUI {
                 System.out.println(newGuest.toString());
                 System.out.println("Room Information: --------------------\n");
                 System.out.println(rc.findRoom(roomNumber).get(0).toString());
+                rc.updateRoomStatus(rc.findRoom(roomNumber).get(0), "OCCUPIED");
             }
             else {//if there are existing guests
                 System.out.println("Similar records are present in the system: ");

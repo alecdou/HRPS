@@ -225,7 +225,7 @@ public class ReservationUI {
 			System.out.println("Printing all reservations in the system record...");
 			for(Reservation reservation : reservations) {
 				// filter expired reservation
-				if (reservation.getCheckInTime().isBefore(LocalDateTime.now())) {
+				if (reservation.getCheckInTime().isAfter(LocalDateTime.now())) {
 					System.out.println(reservation.toString());
 					System.out.print('\n');
 				}
