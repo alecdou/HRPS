@@ -50,7 +50,11 @@ public class ReservationController {
 		LocalDateTime checkOutTime = LocalDateTime.parse(checkOut, formatter);
 		Integer numAdult = Integer.valueOf(adult);
 		Integer numChild = Integer.valueOf(child);
-		ReservationStatus status = ReservationStatus.CONFIRMED;
+        ReservationStatus status;
+		if (checkInTime.isBefore(LocalDateTime.now()))
+		    status = ReservationStatus.EXPIRED;
+		else
+		    status = ReservationStatus.CONFIRMED;
         Reservation reservation = new Reservation(guest, reservationCode, payment, guestContact, checkInTime, 
     			checkOutTime, numAdult, numChild, roomNum, status);        
         this.reservationList.add(reservation);
