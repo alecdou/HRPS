@@ -117,7 +117,7 @@ public class CheckOutUI {
 
 
         //print total amount
-        sb.append("Total bill amount: " + checkOutController.getTotalAmount(promotion));
+        sb.append(String.format("Total bill amount: %.2f", checkOutController.getTotalAmount(promotion)));
         sb.append("\n");
 
 
