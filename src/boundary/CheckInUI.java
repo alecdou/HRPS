@@ -90,8 +90,16 @@ public class CheckInUI {
                 newGuest = guestUI.newGuestUI(guestContact);
                 System.out.print("Please input Check In time (yyyy-MM-dd HH:mm): ");
                 String time = in.nextLine().trim().replace(" ", "T");
+                boolean flag = inputCheck.checkTimeInput(time);
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-                LocalDateTime checkInTime = LocalDateTime.parse(time, formatter);
+                LocalDateTime checkInTime;
+                while (!flag) {
+                    time = in.nextLine().trim().replace(" ", "T");
+                    System.out.println("Invalid input!");
+                    System.out.print("Please input Check In time (yyyy-MM-dd HH:mm): ");
+                    flag = inputCheck.checkTimeInput(time);
+                }
+                checkInTime = LocalDateTime.parse(time, formatter);
                 checkedIn = rc.checkIn(roomNumber, newGuest);
                 checkedIn.setCheckInTime(checkInTime);
                 System.out.println("Checked in: \n");
@@ -114,8 +122,16 @@ public class CheckInUI {
                         checkedIn = rc.checkIn(roomNumber, guest);
                         System.out.print("Please input Check In time (yyyy-MM-dd HH:mm): ");
                         String time = in.nextLine().trim().replace(" ", "T");
+                        boolean flag = inputCheck.checkTimeInput(time);
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-                        LocalDateTime checkInTime = LocalDateTime.parse(time, formatter);
+                        LocalDateTime checkInTime;
+                        while (!flag) {
+                            time = in.nextLine().trim().replace(" ", "T");
+                            System.out.println("Invalid input!");
+                            System.out.print("Please input Check In time (yyyy-MM-dd HH:mm): ");
+                            flag = inputCheck.checkTimeInput(time);
+                        }
+                        checkInTime = LocalDateTime.parse(time, formatter);
                         checkedIn.setCheckInTime(checkInTime);
                         System.out.println("Checked in: \n");
                         System.out.println("Guest Information: --------------------\n");

@@ -81,7 +81,7 @@ public class CheckOutController {
     }
 
     public void printItems(){
-        orderController.printOrder(room.getRoomNumber());
+        orderController.printOrder(room.getRoomNumber(), room.getCheckInTime());
     };
 
     public int getNumStay() {

@@ -7,6 +7,7 @@ import entity.MenuItem;
 import entity.Order;
 
 import java.security.Provider;
+import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.List;
@@ -152,7 +153,7 @@ public class ServiceUI {
                     System.out.println("Order Details:");
                     // check validity of room number
                     if (!rc.findRoom(roomNum).isEmpty()) {
-                        oc.printOrder(roomNum);
+                        oc.printOrder(roomNum, rc.findRoom(roomNum).get(0).getCheckInTime());
 //                        System.out.println(oc.getTotalPrice(roomNum,
 //                                LocalDateTime.of(2020, 4, 2, 0, 0),
 //                                LocalDateTime.of(2020, 4, 4, 0, 0)));
