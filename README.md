@@ -116,9 +116,6 @@ In this project, our team has designed and developed a console-based application
     3. Controller objects contain the logic and will do the necessary computations, update entities correspondingly and return the output to boundary objects.
     4. Entity objects contain information tracked by the system. They serve as data storage with only getter and setter methods.
 
-    In our project, we have the following entity, controller and boundary classes:
-
-    ![Hotel%20Reservation%20and%20Payment%20System/Untitled.png](Hotel%20Reservation%20and%20Payment%20System/Untitled.png)
 
 ### 4. Assumptions
 
