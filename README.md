@@ -142,12 +142,12 @@ In additional to the assumptions made in the assignment document, we have made t
 
 ## III. Class Diagram
 
-![Hotel%20Reservation%20and%20Payment%20System/Untitled%201.png](Hotel%20Reservation%20and%20Payment%20System/Untitled%201.png)
+![https://github.com/DouMaokang/HRPS/blob/master/class%20diagram.png](https://github.com/DouMaokang/HRPS/blob/master/class%20diagram.png)
 
 
 ## IV. Sequence Diagram
 
-![Hotel%20Reservation%20and%20Payment%20System/Untitled%202.png](Hotel%20Reservation%20and%20Payment%20System/Untitled%202.png)
+![https://github.com/DouMaokang/HRPS/blob/master/sequence%20diagram.png](https://github.com/DouMaokang/HRPS/blob/master/sequence%20diagram.png)
 
 *`CheckOutUI`* contains two functions: *`isValidRoomNum()*` for validating user input, and *`checkOut()`* for reading user input, displaying bill, displaying ordered items, displaying payment details and connecting controller classes.
 
