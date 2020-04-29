@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import entity.Guest;
@@ -65,7 +66,7 @@ public class RoomController {
         	//System.out.println(description.length);
         	//System.out.println(Arrays.toString(description));
         	Room room = newRoom(description[0], description[1], description[2], description[3], 
-        			"vacant", description[4], description[5], 100, "1880-01-01T00:00");
+        			description[6], description[4], description[5], 100, "1880-01-01T00:00");
         	roomList.add(room);
         	//break;
         }
@@ -75,6 +76,17 @@ public class RoomController {
     public List<Room> findRoom(String roomNumber) {
         return roomList.stream().filter(o -> o.getRoomNumber().equals(roomNumber)).collect(Collectors.toList());
     }
+
+    public List<Room> findRoomByName(String name) {
+//    	return roomList.stream().filter(o -> o.getGuest().getGuestName().equals(name)).collect(Collectors.toList());
+		List<Room> rooms = new ArrayList<>();
+		for (Room room: roomList) {
+			if (room.getGuest() != null && room.getGuest().getGuestName().equals(name)) {
+				rooms.add(room);
+			}
+		}
+		return rooms;
+	}
 
 	public List<Room> checkRoom(String check) {
 		char type = check.charAt(0);
@@ -118,6 +130,31 @@ public class RoomController {
 		}
 		return availableRooms;
 	}
+
+	public List<Room> checkAvailableRooms(List<Room> rooms, String checkIn, String checkOut){
+		List<Room> availableRooms = new ArrayList<>();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");//input format:yyyy-mm-ddThh:mm
+		LocalDateTime checkInTime = LocalDateTime.parse(checkIn, formatter);
+		LocalDateTime checkOutTime = LocalDateTime.parse(checkOut, formatter);
+		ReservationController rc = ReservationController.getInstance();
+		for(Room room: rooms) {
+			if(room.getRoomStatus().toString().equals("VACANT")) {
+				availableRooms.add(room);
+			} else if (room.getRoomStatus().toString().equals("RESERVED")) {
+				boolean flag = true;
+				for (Reservation reservation: rc.getReservationByRoom(room.getRoomNumber())) {
+					if (!(reservation.getCheckInTime().isAfter(checkOutTime) ||
+							reservation.getCheckOutTime().isBefore(checkInTime))) {
+						flag = false;
+						break;
+					}
+				}
+				if (flag)
+					availableRooms.add(room);
+			}
+		}
+		return availableRooms;
+	}
 	
 	public List<Room> findRoomByFacing(List<Room> rooms, String facing){
 		RoomFacing f = RoomFacing.valueOf(facing.toUpperCase());
@@ -154,9 +191,36 @@ public class RoomController {
 	}
 
 	public Room updateRoomStatus(Room room, String updatedRoomStatus) {
-		RoomStatus status = RoomStatus.valueOf(updatedRoomStatus);
+		RoomStatus status = RoomStatus.valueOf(updatedRoomStatus.toUpperCase());
 		room.setRoomStatus(status);
 		return room;
+	}
+
+	public void printReport(String indicator) {
+    	if (indicator.equals("RoomType")) {
+    		String[] types = {"SINGLE", "DOUBLE", "DELUXE", "VIP", "SUITE"};
+			for (String type: types) {
+				List<Room> rooms = findRoomByType(type);
+				List<Room> occupied = rooms.stream().filter(o -> o.getRoomStatus().toString().equals("OCCUPIED")).collect(Collectors.toList());
+				int occupyNum = occupied.size();
+				System.out.println(String.format("%s: Number: %d out of %d", type, occupyNum, rooms.size()));
+				System.out.print("Rooms: ");
+				for (Room room: occupied) {
+					System.out.print(room.getRoomNumber() + " ");
+				}
+				System.out.println();
+			}
+		} else if (indicator.equals("RoomStatus")) {
+    		String[] statuses = {"VACANT", "OCCUPIED", "RESERVED", "MAINTENANCE"};
+    		for (String status: statuses) {
+    			List<Room> rooms = findRoomByStatus(roomList, status);
+				System.out.println(status + ":");
+				for (Room room: rooms) {
+					System.out.print(room.getRoomNumber() + " ");
+				}
+				System.out.println();
+			}
+		}
 	}
 
 	

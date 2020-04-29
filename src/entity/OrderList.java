@@ -56,22 +56,34 @@ public class OrderList implements Serializable {
         return totalPrice;
     }
 
+    public OrderList filterOrders(String roomNum, LocalDateTime checkInTime) {
+        List<Order> ret_order = new LinkedList<>();
+        for (Order order: getOrderList(roomNum).getOrders()) {
+            if (order.getOrderTime().isAfter(checkInTime) && order.getOrderTime().isBefore(LocalDateTime.now())) {
+                ret_order.add(order);
+            }
+        }
+        return new OrderList(ret_order);
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (Order order : orders) {
             sb.append("Order{" +
-                    "roomNum='" + order.getRoomNum() + '\'' +
-                    ", orderTime=" + order.getOrderTime() +
-                    ", remarks='" + order.getRemarks() + '\'' +
+                    "remarks='" + order.getRemarks() + '\'' +
                     ", status=" + order.getStatus() +
-                    ", orderItems=" + '\n');
+                    ", orderItems={" + '\n');
             for (MenuItem item: order.getOrderItems()) {
                 sb.append("\tMenuItem{" +
                         "name='" + item.getName() + '\'' +
                         ", description='" + item.getDescription() + '\'' +
                         ", price=" + String.valueOf(item.getPrice()) +
-                        '}');
+                        "}\n");
             }
             sb.append("}\n");
         }

@@ -114,16 +114,21 @@ public class Room {
 
     @Override
     public String toString() {
-		return "Room{" + '\n' +
-            "RoomType= " + roomType + '\n' +
-            "RoomBedType= " + roomBedType + '\n' +
-            "RoomFacing= " + roomFacing + '\n' +
-            "RoomStatus= " + roomStatus + '\n' +
-            "RoomNum= " + roomNumber + '\n' +
-            "hasWifi= " + hasWifi + '\n' +
-            "isSmokingFree= " + isSmokingFree + '\n' +
-            "Rate= " + rate + '\n' +
-            "checkInTime= " + checkInTime.toString().replace("T", " ") + '\n' +
-            '}';
+//		return "Room{" + '\n' +
+//            "RoomType= " + roomType + '\n' +
+//            "RoomBedType= " + roomBedType + '\n' +
+//            "RoomFacing= " + roomFacing + '\n' +
+//            "RoomStatus= " + roomStatus + '\n' +
+//            "RoomNum= " + roomNumber + '\n' +
+//            "hasWifi= " + hasWifi + '\n' +
+//            "isSmokingFree= " + isSmokingFree + '\n' +
+//            "Rate= " + rate + '\n' +
+//            "checkInTime= " + checkInTime.toString().replace("T", " ") + '\n' +
+//            '}';
+        StringBuilder sb = new StringBuilder();
+        String room = String.format("%s -> %s -> %s -> %s -> %s -> %s -> %s", roomNumber, roomType.toString(), roomBedType.toString(),
+                roomFacing.toString(), hasWifi ? "Yes" : "No", isSmokingFree ? "Yes" : "No", "S$" + rate);
+        sb.append(room);
+        return sb.toString();
     }
 }

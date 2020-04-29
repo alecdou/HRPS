@@ -1,7 +1,8 @@
 package entity;
+import java.io.Serializable;
 import java.util.UUID;
 import java.time.LocalDateTime;
-public class Reservation {
+public class Reservation implements Serializable {
 	UUID reservationCode;
 	public enum PaymentMethod{CASH, CREDITCARD}
 	PaymentMethod payment;
@@ -14,9 +15,7 @@ public class Reservation {
 	private String roomNum;
 	public enum ReservationStatus{AVAILABLE, CONFIRMED, WAITLIST, CHECKEDIN, EXPIRED}
 	ReservationStatus status;
-	
-	
-	
+
 	
 	public Reservation(Guest guest, UUID reservationCode, PaymentMethod payment, String guestContact, LocalDateTime checkInTime, 
 			LocalDateTime checkOutTime, Integer numAdult, Integer numChild, String roomNum, ReservationStatus status) {

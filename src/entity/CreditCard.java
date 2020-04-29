@@ -1,6 +1,8 @@
 package entity;
 
-public class CreditCard {
+import java.io.Serializable;
+
+public class CreditCard implements Serializable {
 	String creditCardNumber;
 	String billingAddress;
 	

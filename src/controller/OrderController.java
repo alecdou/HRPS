@@ -1,9 +1,6 @@
 package controller;
 
-import entity.MenuItem;
-import entity.Order;
-import entity.OrderList;
-import entity.OrderStatus;
+import entity.*;
 import tool.SerializeDB;
 
 import java.io.File;
@@ -45,9 +42,9 @@ public class OrderController {
         SerializeDB.writeSerializedObject(dir, orderList);
     }
 
-    public void printOrder(String roomNum) {
+    public void printOrder(String roomNum, LocalDateTime time) {
         updateOrder();
-        System.out.println(orderList.getOrderList(roomNum));
+        System.out.println(orderList.filterOrders(roomNum, time));
     }
 
     public double getTotalPrice(String roomNum, LocalDateTime checkinTime, LocalDateTime checkoutTime) {

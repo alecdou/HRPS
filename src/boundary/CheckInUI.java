@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
+import controller.CheckInputController;
 import controller.GuestController;
 import controller.ReservationController;
 import controller.RoomController;
@@ -23,6 +24,7 @@ public class CheckInUI {
     private GuestController gc = GuestController.getInstance();
     private ReservationController resc = ReservationController.getInstance();
     private RoomUI rui = RoomUI.getInstance();
+    private CheckInputController inputCheck = CheckInputController.getInstance();
     private RoomController rc = RoomController.getInstance();
     private Scanner in = new Scanner(System.in);
 
@@ -43,94 +45,135 @@ public class CheckInUI {
         switch (choice) {
             case 1:
                 reservationCheckInUI();
-                System.out.println("Checked in");
                 break;
             case 2:
                 walkInCheckInUI();
-                System.out.println("Checked in");
                 break;
         }
 
     }
 
     private void walkInCheckInUI() {
-        
+
         List<Room> rooms = rc.checkAvailableRooms(rui.findRoomUI());
         Guest newGuest;
         Room checkedIn = null;
         // call the room controller to find a list of vacant rooms (based on the above criteria)
         if(rooms.isEmpty()){
-    		System.out.println("There is no available room with the specified requirements. ");
-    	}
-    	else{
-    		System.out.println("These are the available rooms with the specified requirements: ");
-    		for(Room room: rooms) {
-    			System.out.println(room.getRoomNumber());
-    		}
-    		System.out.println("Select a room: ");
-    		String roomNumber = in.nextLine();
-        
-	        // call the guest ui to create a new guest
-	        System.out.print("Please enter Guest Contact: ");
-	    	String guestContact = in.nextLine().trim().replace(" ", "");
-            boolean valid = gc.checkContactInput(guestContact);
-            while(valid!=true) {
-            	System.out.print("Invalid Contact. Please re-enter Contact: ");
-                guestContact = in.nextLine().trim().replace(" ", "");
-                valid = gc.checkContactInput(guestContact);
+            System.out.println("There is no available room with the specified requirements. ");
+        }
+        else{
+            System.out.println("These are the available rooms with the specified requirements: ");
+            System.out.println("roomNumber -> RoomType -> RoomBedType -> RoomFacing -> Wifi -> SmokingFree -> Rate");
+            for(Room room: rooms) {
+                System.out.println(room.toString());
             }
-        	guestContact = in.nextLine().trim();
-	        List<Guest> guests = guestUI.lookForExistingGuests(guestContact);
-	        if(guests.isEmpty()) {
-	        	newGuest = guestUI.newGuestUI(guestContact);
-	        	checkedIn = rc.checkIn(roomNumber, newGuest);
-	        }
-	        else {//if there are existing guests
-				System.out.println("Similar records are present in the system: ");
-	        	for (Guest guest : guests) {
-	            	System.out.println(guest.toString());
-	            	System.out.println("Is this this who you are looking for?");
-	            	System.out.println("1. Yes");
-	            	System.out.println("2. No");
-	            	System.out.println("Your choice: ");
-	                int choice2 = in.nextInt();
-	                in.nextLine();
-	                if(choice2 == 1) {//it has to be yes because with the same contact number, no new guest can be created 
-	                	checkedIn = rc.checkIn(roomNumber, guest);
-	                	break;
-	                }
-	        	}
-	        }
-    	}
-        System.out.print("Please input Check In time (yyyy-MM-dd HH:mm): ");
-        String time = in.nextLine().trim().replace(" ", "T");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-    	LocalDateTime checkInTime = LocalDateTime.parse(time, formatter);
-        checkedIn.setCheckInTime(checkInTime);
+            System.out.println("Select a room: ");
+            String roomNumber = in.nextLine();
+            while(rc.findRoom(roomNumber).isEmpty() || !rooms.contains(rc.findRoom(roomNumber).get(0))) {
+                System.out.println("Please enter a valid room number in the format of level-room (ll-rr): ");
+                roomNumber = in.nextLine();
+            }
+
+            // call the guest ui to create a new guest
+            System.out.print("Please enter Guest Contact: ");
+            String guestContact = in.nextLine().trim().replace(" ", "");
+            boolean valid = inputCheck.checkContactInput(guestContact);
+            while(!valid) {
+                System.out.print("Invalid Contact. Please re-enter Contact: ");
+                guestContact = in.nextLine().trim().replace(" ", "");
+                valid = inputCheck.checkContactInput(guestContact);
+            }
+//            guestContact = in.nextLine().trim();
+            List<Guest> guests = guestUI.lookForExistingGuests(guestContact);
+            if(guests.isEmpty()) {
+                newGuest = guestUI.newGuestUI(guestContact);
+                System.out.print("Please input Check In time (yyyy-MM-dd HH:mm): ");
+                String time = in.nextLine().trim().replace(" ", "T");
+                boolean flag = inputCheck.checkTimeInput(time);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+                LocalDateTime checkInTime;
+                while (!flag) {
+                    time = in.nextLine().trim().replace(" ", "T");
+                    System.out.println("Invalid input!");
+                    System.out.print("Please input Check In time (yyyy-MM-dd HH:mm): ");
+                    flag = inputCheck.checkTimeInput(time);
+                }
+                checkInTime = LocalDateTime.parse(time, formatter);
+                checkedIn = rc.checkIn(roomNumber, newGuest);
+                checkedIn.setCheckInTime(checkInTime);
+                System.out.println("Checked in: \n");
+                System.out.println("Guest Information: --------------------\n");
+                System.out.println(newGuest.toString());
+                System.out.println("Room Information: --------------------\n");
+                System.out.println(rc.findRoom(roomNumber).get(0).toString());
+                rc.updateRoomStatus(rc.findRoom(roomNumber).get(0), "OCCUPIED");
+            }
+            else {//if there are existing guests
+                System.out.println("Similar records are present in the system: ");
+                for (Guest guest : guests) {
+                    System.out.println(guest.toString());
+                    System.out.println("Is this this who you are looking for?");
+                    System.out.println("1. Yes");
+                    System.out.println("2. No");
+                    System.out.println("Your choice: ");
+                    int choice2 = in.nextInt();
+                    in.nextLine();
+                    if(choice2 == 1) {//it has to be yes because with the same contact number, no new guest can be created
+                        checkedIn = rc.checkIn(roomNumber, guest);
+                        System.out.print("Please input Check In time (yyyy-MM-dd HH:mm): ");
+                        String time = in.nextLine().trim().replace(" ", "T");
+                        boolean flag = inputCheck.checkTimeInput(time);
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+                        LocalDateTime checkInTime;
+                        while (!flag) {
+                            time = in.nextLine().trim().replace(" ", "T");
+                            System.out.println("Invalid input!");
+                            System.out.print("Please input Check In time (yyyy-MM-dd HH:mm): ");
+                            flag = inputCheck.checkTimeInput(time);
+                        }
+                        checkInTime = LocalDateTime.parse(time, formatter);
+                        checkedIn.setCheckInTime(checkInTime);
+                        System.out.println("Checked in: \n");
+                        System.out.println("Guest Information: --------------------\n");
+                        System.out.println(guest.toString());
+                        System.out.println("Room Information: --------------------\n");
+                        System.out.println(rc.findRoom(roomNumber).get(0).toString());
+                        break;
+                    }
+                }
+            }
+        }
+
     }
 
     private void reservationCheckInUI() {
         // find the reservation by guest contact and display its details (reservation ui)
-    	System.out.print("Please enter Guest Contact: ");
-    	String guestContact = in.nextLine().trim().replace(" ", "");
-    	boolean valid = resc.checkContactInput(guestContact);
+        System.out.print("Please enter Guest Contact: ");
+        String guestContact = in.nextLine().trim().replace(" ", "");
+        boolean valid = resc.checkContactInput(guestContact);
         while(valid!=true) {
-        	System.out.print("Invalid Contact. Please re-enter Contact: ");
-        	guestContact = in.nextLine().trim().replace(" ", "");
+            System.out.print("Invalid Contact. Please re-enter Contact: ");
+            guestContact = in.nextLine().trim().replace(" ", "");
             valid = resc.checkContactInput(guestContact);
         }
         List<Reservation> reservations = resc.searchReservation(guestContact);
         if(reservations.isEmpty()) {
-        	System.out.println("No records found!");
+            System.out.println("No records found!");
         }
         else {
-        	Guest guest;
-        	Reservation res = reservations.get(0);
-        	List<Guest> guests = gc.searchGuestContact(res.getGuestContact());
-        	guest = guests.get(0);
-        	Room checkedIn = rc.checkIn(res.getRoomNum(), guest);
-        	ReservationStatus status = ReservationStatus.CHECKEDIN;
+            Guest guest;
+            Reservation res = reservations.get(0);
+            List<Guest> guests = gc.searchGuestContact(res.getGuestContact());
+            guest = guests.get(0);
+            Room checkedIn = rc.checkIn(res.getRoomNum(), guest);
+            ReservationStatus status = ReservationStatus.CHECKEDIN;
             res.setStatus(status);
+            System.out.println("Checked in: \n");
+            System.out.println("Guest Information: --------------------\n");
+            System.out.println(guest.toString());
+            System.out.println("Room Information: --------------------\n");
+            System.out.println(res.toString());
         }
     }
 
